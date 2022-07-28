@@ -38,7 +38,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { url } from "../../../../../utils/HttpUrl";
 import MDButton from "../../../../../components/MDButton";
-// eslint-disable-next-line import/no-unresolved
 
 export default function data() {
   const [json, setJson] = useState([]);

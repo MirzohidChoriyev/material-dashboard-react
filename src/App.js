@@ -42,8 +42,6 @@ import themeDarkRTL from "assets/theme-dark/theme-rtl";
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-// eslint-disable-next-line import/no-unresolved
-import "antd/dist/antd.css";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
@@ -54,7 +52,6 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-// eslint-disable-next-line camelcase
 import { session_time_func } from "./utils/session_time";
 
 export default function App() {

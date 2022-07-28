@@ -2,7 +2,6 @@ import axios from "axios";
 import { url } from "./HttpUrl";
 import { useState } from "react";
 
-// eslint-disable-next-line import/prefer-default-export,camelcase
 export const session_time_func = () => {
   axios
     .get(`${url}/utils/session_time`)

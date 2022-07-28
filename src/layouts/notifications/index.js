@@ -15,7 +15,6 @@ Coded by www.creative-tim.com
 
 import { useState, useEffect } from "react";
 
-// @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
@@ -31,7 +30,6 @@ import axios from "axios";
 import { url } from "../../utils/HttpUrl";
 import Icon from "@mui/material/Icon";
 import MDButton from "../../components/MDButton";
-import { Modal } from "antd";
 import {
   Button,
   FormControl,
