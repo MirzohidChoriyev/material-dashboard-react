@@ -34,11 +34,46 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import { Navigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { url } from "../../utils/HttpUrl";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const [lenProduct, setLenProduct] = useState("");
+  const [lenUsers, setLenUsers] = useState("");
 
-  return (
+  const productCountReturn = () => {
+    axios
+      .get(`${url}/product/getProductLength`)
+      .then((res) => {
+        setLenProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const usersCountReturn = () => {
+    axios
+      .get(`${url}/users/getUsersLength`)
+      .then((res) => {
+        setLenUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    productCountReturn();
+    usersCountReturn();
+  }, []);
+
+  return localStorage.getItem("login") === null ? (
+    <Navigate to="/authentication/sign-in" />
+  ) : (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
@@ -48,8 +83,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="weekend"
-                title="Bookings"
-                count={281}
+                title="Products"
+                count={`${lenProduct} ta`}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -62,12 +97,12 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
+                title="Today's income"
+                count={`${25000} so'm`}
                 percentage={{
                   color: "success",
                   amount: "+3%",
-                  label: "than last month",
+                  label: "Today's income",
                 }}
               />
             </MDBox>
@@ -77,8 +112,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Revenue"
-                count="34k"
+                title="This month's income"
+                count={`${25000} so'm`}
                 percentage={{
                   color: "success",
                   amount: "+1%",
@@ -92,12 +127,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Followers"
-                count="+91"
+                title="Site users"
+                count={`${lenUsers} ta`}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "Just updated",
+                  label: "In general",
                 }}
               />
             </MDBox>

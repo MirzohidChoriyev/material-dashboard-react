@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useEffect } from "react";
 
 // react-router-dom components
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -24,7 +24,6 @@ import PropTypes from "prop-types";
 // @mui material components
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
@@ -52,6 +51,11 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
+
+  const logOutFunc = () => {
+    window.localStorage.removeItem("login");
+    window.localStorage.removeItem("current_user_data");
+  }
 
   let textColor = "white";
 
@@ -180,17 +184,16 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       />
       <List>{renderRoutes}</List>
       <MDBox p={2} mt="auto">
-        <MDButton
-          component="a"
-          href="https://www.creative-tim.com/product/material-dashboard-pro-react"
-          target="_blank"
-          rel="noreferrer"
-          variant="gradient"
-          color={sidenavColor}
-          fullWidth
-        >
-          upgrade to pro
-        </MDButton>
+        <Link to="/authentication/sign-in">
+          <MDButton
+            variant="gradient"
+            onClick={() => logOutFunc()}
+            style={{background:"darkorange", color: 'white'}}
+            fullWidth
+          >
+            Log out
+          </MDButton>
+        </Link>
       </MDBox>
     </SidenavRoot>
   );

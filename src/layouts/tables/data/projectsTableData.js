@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Icon from "@mui/material/Icon";
+// import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -26,13 +26,32 @@ import MDProgress from "components/MDProgress";
 
 // Images
 import LogoAsana from "assets/images/small-logos/logo-asana.svg";
-import logoGithub from "assets/images/small-logos/github.svg";
-import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
-import logoSlack from "assets/images/small-logos/logo-slack.svg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
-import logoInvesion from "assets/images/small-logos/logo-invision.svg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { url } from "../../../utils/HttpUrl";
+import MDButton from "../../../components/MDButton";
+// import logoGithub from "assets/images/small-logos/github.svg";
+// import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
+// import logoSlack from "assets/images/small-logos/logo-slack.svg";
+// import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
+// import logoInvesion from "assets/images/small-logos/logo-invision.svg";
 
 export default function data() {
+  const [json, setJson] = useState([]);
+  const branchesData = () => {
+    axios
+      .get(`${url}/shop/all`)
+      .then((res) => {
+        setJson(res.data.object);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    branchesData();
+  }, []);
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -55,128 +74,58 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "project", accessor: "project", width: "30%", align: "left" },
-      { Header: "budget", accessor: "budget", align: "left" },
-      { Header: "status", accessor: "status", align: "center" },
+      { Header: "name", accessor: "name", width: "30%", align: "left" },
+      { Header: "view", accessor: "view", align: "left" },
+      { Header: "this month damage", accessor: "monthDamage", align: "center" },
+      { Header: "this month income", accessor: "monthIncome", align: "center" },
+      { Header: "address", accessor: "address", align: "center" },
       { Header: "completion", accessor: "completion", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: [
-      {
-        project: <Project image={LogoAsana} name="Asana" />,
-        budget: (
+    rows:
+      // eslint-disable-next-line no-unused-vars
+      json.map((item, index) => ({
+        name: <Project image={LogoAsana} name={item.name} />,
+        view: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            $2,500
+            <MDButton size="small" style={{ color: "blueviolet" }}>
+              view
+            </MDButton>
           </MDTypography>
         ),
-        status: (
+        monthDamage: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            working
+            <div>
+              <span style={{ color: "red" }}>{item.damage} </span>
+              <span style={{ color: "red" }}>UZS</span>
+            </div>
           </MDTypography>
         ),
-        completion: <Progress color="info" value={60} />,
-        action: (
-          <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
-          </MDTypography>
-        ),
-      },
-      {
-        project: <Project image={logoGithub} name="Github" />,
-        budget: (
-          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            $5,000
-          </MDTypography>
-        ),
-        status: (
+        monthIncome: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            done
+            <div>
+              <span style={{ color: "limegreen" }}>{item.damage} </span>
+              <span style={{ color: "limegreen" }}>UZS</span>
+            </div>
           </MDTypography>
         ),
-        completion: <Progress color="success" value={100} />,
-        action: (
-          <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
-          </MDTypography>
-        ),
-      },
-      {
-        project: <Project image={logoAtlassian} name="Atlassian" />,
-        budget: (
-          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            $3,400
-          </MDTypography>
-        ),
-        status: (
+        address: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            canceled
+            {item.address}
           </MDTypography>
         ),
-        completion: <Progress color="error" value={30} />,
+        completion: <Progress color="warning" value={item.status} />,
         action: (
-          <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
-          </MDTypography>
-        ),
-      },
-      {
-        project: <Project image={logoSpotify} name="Spotify" />,
-        budget: (
-          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            $14,000
-          </MDTypography>
-        ),
-        status: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            working
+            <MDButton size="small" style={{ color: "green" }}>
+              edit
+            </MDButton>
+            <MDButton size="small" style={{ color: "red" }}>
+              delete
+            </MDButton>
           </MDTypography>
         ),
-        completion: <Progress color="info" value={80} />,
-        action: (
-          <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
-          </MDTypography>
-        ),
-      },
-      {
-        project: <Project image={logoSlack} name="Slack" />,
-        budget: (
-          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            $1,000
-          </MDTypography>
-        ),
-        status: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            canceled
-          </MDTypography>
-        ),
-        completion: <Progress color="error" value={0} />,
-        action: (
-          <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
-          </MDTypography>
-        ),
-      },
-      {
-        project: <Project image={logoInvesion} name="Invesion" />,
-        budget: (
-          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            $2,300
-          </MDTypography>
-        ),
-        status: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            done
-          </MDTypography>
-        ),
-        completion: <Progress color="success" value={100} />,
-        action: (
-          <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
-          </MDTypography>
-        ),
-      },
-    ],
+      })),
   };
 }
