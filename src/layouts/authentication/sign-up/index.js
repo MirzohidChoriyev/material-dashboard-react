@@ -1,42 +1,20 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
 
-// @mui material components
 import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-
-// Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
-
-// Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { url } from "../../../utils/HttpUrl";
 
-// eslint-disable-next-line no-unused-vars
 const initialValue = {
   fullname: "",
   username: "",
@@ -63,22 +41,14 @@ function Cover() {
     branchFunc();
   }, []);
 
-  // eslint-disable-next-line camelcase
   const { username, password, fullname, shop_id } = config;
-  // eslint-disable-next-line camelcase
   const [f_error, setFerror] = useState(false);
-  // eslint-disable-next-line camelcase
   const [u_error, setUerror] = useState(false);
-  // eslint-disable-next-line camelcase
   const [p_error, setPerror] = useState(false);
-  // eslint-disable-next-line camelcase
   const [e_error, setEerror] = useState(false);
-  // eslint-disable-next-line camelcase
   const [b_error, setBerror] = useState(false);
-  // eslint-disable-next-line camelcase
   const login_path = useNavigate();
 
-  // eslint-disable-next-line no-unused-vars
   const inputValue = (e) => {
     setConfig({
       ...config,
@@ -100,7 +70,6 @@ function Cover() {
     }
   };
 
-  // eslint-disable-next-line camelcase
   const save_data = () => {
     if (
       document.getElementById("fullname").value === "" ||

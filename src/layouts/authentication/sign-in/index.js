@@ -56,13 +56,9 @@ function Basic() {
   const [config, setConfig] = useState(initialValue);
   const { username, password } = config;
   const [error, setError] = useState(false);
-  // eslint-disable-next-line camelcase
   const [u_error, setUerror] = useState(false);
-  // eslint-disable-next-line camelcase
   const [p_error, setPerror] = useState(false);
-  // eslint-disable-next-line camelcase
   const [pas_error, setPasError] = useState(false);
-  // eslint-disable-next-line camelcase
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {

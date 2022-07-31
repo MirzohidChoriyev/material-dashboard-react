@@ -45,6 +45,7 @@ import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
+import 'antd/dist/antd.css';
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -59,6 +60,7 @@ export default function App() {
   useEffect(() => {
     session_time_func();
   }, []);
+
   const {
     miniSidenav,
     direction,

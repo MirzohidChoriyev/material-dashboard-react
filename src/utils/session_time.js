@@ -1,13 +1,12 @@
 import axios from "axios";
 import { url } from "./HttpUrl";
-import { useState } from "react";
 
 export const session_time_func = () => {
   axios
     .get(`${url}/utils/session_time`)
     .then((res) => {
-      // eslint-disable-next-line no-use-before-define
       removeTime(res.data);
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
