@@ -43,7 +43,7 @@ function Overview() {
             .catch((err) => {
                 console.log(err);
             });
-    };
+  };
 
   useEffect(() => {
     userData();
@@ -66,11 +66,11 @@ function Overview() {
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
                 title="profile information"
-                description={json.work_place}
+                description={json.work_place === null ? "-----" : json.work_place}
                 info={{
                   fullName: `${json.fullname}`,
-                  mobile: `${json.phone_number}`,
-                  location: `${json.address}`,
+                  mobile: `${json.phone_number === null ? "-----" : json.phone_number}`,
+                  location: `${json.address === null ? "-----" : json.address}`,
                 }}
                 social={[
                   {

@@ -1,53 +1,85 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useState, useEffect } from "react";
-
-// prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
+import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
+import "./Style.css";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
-// Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-
-// Images
-// eslint-disable-next-line camelcase
 import userImage from "assets/images/user_image.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
-// eslint-disable-next-line camelcase
 import axios from "axios";
-// eslint-disable-next-line camelcase
 import { current_user_fullname, currentUserId } from "../../../../utils/session_time";
 import { url } from "../../../../utils/HttpUrl";
+import $ from 'jquery';
 
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
   const [json, setJson] = useState([]);
+  const [error, setError] = useState(false);
+  const [hashId, setHashId] = useState("");
+
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const openImageUpload = () => {
+        $('#image').trigger('click');
+    }
+
+    const readImage = () => {
+        if(currentUserId() !== null){
+            axios.get(`${url}/userImage/readImageHashId/${currentUserId()}`)
+                .then(res=>{
+                    setHashId(res.data);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+        } else {
+            setHashId("");
+        }
+    }
+
+    useEffect(()=>{
+        readImage();
+    }, [])
+
+    const handleSubmit = async (event) => {
+        if(currentUserId() !== null){
+            if(selectedFile !== null){
+                event.preventDefault()
+                const formData = new FormData();
+                formData.append("image", selectedFile);
+                try {
+                    const response = await axios({
+                        method: "post",
+                        url: `${url}/userImage/save/${currentUserId()}`,
+                        data: formData,
+                        headers: {"Content-Type": "multipart/form-data"},
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+                setSelectedFile(null);
+                readImage();
+            } else {
+                setError(true);
+            }
+        }
+    };
+
+    const handleFileSelect = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
 
   const userData = () => {
     axios
@@ -64,22 +96,15 @@ function Header({ children }) {
   }, []);
 
   useEffect(() => {
-    // A function that sets the orientation state of the tabs.
     function handleTabsOrientation() {
       return window.innerWidth < breakpoints.values.sm
         ? setTabsOrientation("vertical")
         : setTabsOrientation("horizontal");
     }
 
-    /** 
-     The event listener that's calling the handleTabsOrientation function when resizing the window.
-    */
     window.addEventListener("resize", handleTabsOrientation);
 
-    // Call the handleTabsOrientation function to set the state with the initial value.
     handleTabsOrientation();
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
@@ -114,8 +139,16 @@ function Header({ children }) {
         }}
       >
         <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <MDAvatar src={userImage} alt="profile-image" size="xl" shadow="sm" />
+          <Grid item position="relative">
+            <MDAvatar src={hashId != "" ? `${url}/userImage/readImage/${hashId}` : userImage} alt="profile-image" size="xl" shadow="sm" />
+              <span id = "user_image_edit">
+                  <CollectionsOutlinedIcon onClick={openImageUpload} fontSize="small" style = {{cursor:'pointer', position:'absolute', bottom:'0px', right:'-6px'}} />
+                  <form onSubmit={handleSubmit} className="form_class_file">
+                      <input type="file" name = "image" className="upload_image_input" onChange={handleFileSelect} id = "image" accept="image/*" />
+                      <input type="submit" style={{display: selectedFile !== null ? "block" : "none"}} name = "button" className="image_edit_button" id = "button" value="Save" />
+                  </form>
+              </span>
+              <div style={{color:"red", fontSize:'12px'}}>{error && "Rasm kiritishingiz kerak."}</div>
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>

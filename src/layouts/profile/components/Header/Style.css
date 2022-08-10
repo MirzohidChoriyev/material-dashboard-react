@@ -1,0 +1,24 @@
+.image_edit_button{
+    border: 1px solid #c6c6c6;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size: 14px;
+    background-color: blueviolet;
+    padding: 1px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-weight: 500;
+}
+.image_edit_button:focus{
+    background-color: #a95ff2;
+    color: #ebebeb;
+}
+.form_class_file{
+    position: absolute;
+    right: 11px;
+    bottom: -35px;
+}
+.upload_image_input{
+    display: none;
+}

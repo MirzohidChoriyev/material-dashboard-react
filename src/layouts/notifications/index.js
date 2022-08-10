@@ -207,7 +207,7 @@ function Notifications() {
         </MDBox>
       </DashboardLayout>
       <div>
-        <Modal title="Basic Modal" visible={show} closable={false} footer={false} style={{zIndex:'2000'}}>
+        <Modal title="Xabar kiritish" visible={show} closable={false} footer={false} style={{zIndex:'2000'}}>
           <TextField
             id="message"
             label="Message"

@@ -1,46 +1,16 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-// import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
-
-// Images
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../../utils/HttpUrl";
 import MDButton from "../../../components/MDButton";
-// import logoGithub from "assets/images/small-logos/github.svg";
-// import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
-// import logoSlack from "assets/images/small-logos/logo-slack.svg";
-// import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
-// import logoInvesion from "assets/images/small-logos/logo-invision.svg";
+import {date_mask} from "../../../utils/utils";
 
 export default function data() {
   const [json, setJson] = useState([]);
-  const branchesData = () => {
+
+  const productData = () => {
     axios
-      .get(`${url}/shop/all`)
+      .get(`${url}/product/all`)
       .then((res) => {
         setJson(res.data.object);
       })
@@ -50,78 +20,75 @@ export default function data() {
   };
 
   useEffect(() => {
-    branchesData();
+      productData();
   }, []);
-  const Project = ({ image, name }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" variant="rounded" />
-      <MDTypography display="block" variant="button" fontWeight="medium" ml={1} lineHeight={1}>
-        {name}
-      </MDTypography>
-    </MDBox>
-  );
 
-  const Progress = ({ color, value }) => (
-    <MDBox display="flex" alignItems="center">
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {value}%
-      </MDTypography>
-      <MDBox ml={0.5} width="9rem">
-        <MDProgress variant="gradient" color={color} value={value} />
-      </MDBox>
-    </MDBox>
-  );
+    function delete_product(id) {
+        axios
+            .delete(`${url}/product/delete/${id}`)
+            .then((res) => {
+                productData();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 
-  return {
+    return {
     columns: [
-      { Header: "name", accessor: "name", width: "30%", align: "left" },
-      { Header: "view", accessor: "view", align: "left" },
-      { Header: "this month damage", accessor: "monthDamage", align: "center" },
-      { Header: "this month income", accessor: "monthIncome", align: "center" },
-      { Header: "address", accessor: "address", align: "center" },
-      { Header: "completion", accessor: "completion", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
+      { Header: "Mahsulot nomi", accessor: "name", width: "30%", align: "left" },
+      { Header: "Kirish narxi", accessor: "income_price", align: "left" },
+      { Header: "Sotuv narxi", accessor: "sale_price", align: "center" },
+      { Header: "Qolgan soni", accessor: "count", align: "center" },
+      { Header: "Umumiy soni", accessor: "all_count", align: "center" },
+      { Header: "id", accessor: "id", align: "center" },
+      { Header: "Qo'shilgan sana", accessor: "date", align: "center" },
+      { Header: "Tahrirlash", accessor: "action", align: "center" },
     ],
 
     rows:
-      // eslint-disable-next-line no-unused-vars
       json.map((item, index) => ({
-        name: <Project image={LogoAsana} name={item.name} />,
-        view: (
-          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            <MDButton size="small" style={{ color: "blueviolet" }}>
-              view
-            </MDButton>
-          </MDTypography>
-        ),
-        monthDamage: (
+          name: (
+              <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  {item.name}
+              </MDTypography>
+          ),
+          income_price: (
+              <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  {item.incomePrice}
+              </MDTypography>
+          ),
+        sale_price: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            <div>
-              <span style={{ color: "red" }}>{item.damage} </span>
-              <span style={{ color: "red" }}>UZS</span>
-            </div>
+              {item.salePrice}
           </MDTypography>
         ),
-        monthIncome: (
+          count: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            <div>
-              <span style={{ color: "limegreen" }}>{item.damage} </span>
-              <span style={{ color: "limegreen" }}>UZS</span>
-            </div>
+              {item.count}
           </MDTypography>
         ),
-        address: (
+          all_count: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {item.address}
+            {item.all_count}
           </MDTypography>
         ),
-        completion: <Progress color="warning" value={item.status} />,
+          id: (
+              <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  {item.id}
+              </MDTypography>
+          ),
+          date: (
+              <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  {date_mask(item.createdDate)}
+              </MDTypography>
+          ),
         action: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             <MDButton size="small" style={{ color: "green" }}>
               edit
             </MDButton>
-            <MDButton size="small" style={{ color: "red" }}>
+            <MDButton onClick = {() => delete_product(item.id)} size="small" style={{ color: "red" }}>
               delete
             </MDButton>
           </MDTypography>

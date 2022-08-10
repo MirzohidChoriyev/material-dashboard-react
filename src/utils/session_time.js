@@ -21,7 +21,6 @@ const removeTime = (time) => {
   }, time);
 };
 
-// eslint-disable-next-line camelcase
 export const current_user_fullname = () => {
   const user = window.localStorage.getItem("current_user_data");
   let name;

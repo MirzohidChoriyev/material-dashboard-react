@@ -20,6 +20,11 @@ const initialValue = {
   username: "",
   password: "",
   shop_id: 0,
+  roles:[
+    {
+      name: "ROLE_USER"
+    }
+  ]
 };
 
 function Cover() {
@@ -41,7 +46,7 @@ function Cover() {
     branchFunc();
   }, []);
 
-  const { username, password, fullname, shop_id } = config;
+  const { username, password, fullname, shop_id, roles } = config;
   const [f_error, setFerror] = useState(false);
   const [u_error, setUerror] = useState(false);
   const [p_error, setPerror] = useState(false);
@@ -173,14 +178,12 @@ function Cover() {
                   onChange={(e) => inputValue(e)}
                 >
                   <MenuItem value={0}>Tanlang</MenuItem>
-                  {/* eslint-disable-next-line no-unused-vars */}
                   {branch.map((item, index) => (
                     <MenuItem value={item.id}>{item.name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
               <div className="error-message">
-                {/* eslint-disable-next-line camelcase */}
                 {b_error ? "Filialni tanlang!" : ""}
               </div>
             </MDBox>
@@ -196,11 +199,9 @@ function Cover() {
                 fullWidth
               />
               <div className="error-message">
-                {/* eslint-disable-next-line camelcase */}
                 {u_error ? "Login kamida 5 ta belgidan ko'p bo'lishi kerak" : ""}
               </div>
               <div className="error-message">
-                {/* eslint-disable-next-line camelcase */}
                 {e_error ? "Ushbu login ro'yxatdan o'tilgan boshqa login kiriting!" : ""}
               </div>
             </MDBox>

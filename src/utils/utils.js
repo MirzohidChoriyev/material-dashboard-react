@@ -76,20 +76,25 @@ export const moneyMask=(number)=>{
         result += arr[i];
     }
     return result + " so'm";
+};
+
+export const date_mask = (time) => {
+    if(time !== null){
+        let sana = time.split("T")[0];
+        let hour = time.split("T")[1].substring(0, 5);
+        return sana + " Soat " + hour;
+    }
 }
 
-//existByusername
-const existByUsername = (username) => {
-    axios
-        .get(`${url}/users/existByUsername/${username}`)
-        .then((res) => {
-
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-export const getExistByUsername = () => {
-    return false;
-}
+export const setRoutesUserRole = (routes) => {
+    const result = [];
+    for (let i = 0; i < routes.length; i++) {
+        for (let j = 0; j < routes[i].role.length; j++) {
+            if ("USER" == routes[i].role[j]) {
+                result.push(routes[i]);
+                break;
+            }
+        }
+    }
+    return routes;
+};
