@@ -22,12 +22,11 @@ const initialValue = {
   description: "----",
   incomePrice: "",
   salePrice: "",
-  category_id: 1,
+  category_id: "1000",
   count: "",
   count_note: "",
-  valyuta: "1",
+  valyuta: "S000",
 }
-
 
 function Tables() {
   const { columns, rows } = authorsTableData();
@@ -41,19 +40,20 @@ function Tables() {
   }
 
   function inputValue(e) {
-    setConfig({...config, [e.target.name]:e.target.value});
+    setConfig({...config, [e.target.name]: e.target.value});
   }
 
   function saveProduct(){
     axios
         .post(`${url}/product/save`, config)
         .then((res) => {
+          window.localStorage.setItem("product", "save");
           closeModal();
         })
         .catch((err) => {
           console.log(err);
         });
-  };
+  }
 
   return (
     <div>
@@ -107,9 +107,9 @@ function Tables() {
         <div className="item-block">
           <label htmlFor="valyuta" className="label-item"><span style={{color: 'crimson', marginRight: '1px'}}>*</span>Hisoblash valyutasi</label>
           <select name="valyuta" className="select-item" id="valyuta" value={valyuta} onChange={inputValue}>
-            <option value={1}>So'm</option>
-            <option value={2}>Dollar</option>
-            <option value={3}>Evro</option>
+            <option value={"S000"}>So'm</option>
+            <option value={"D000"}>Dollar</option>
+            <option value={"E000"}>Evro</option>
           </select>
         </div>
 
@@ -136,8 +136,8 @@ function Tables() {
         <div className="item-block">
           <label htmlFor="category_id" className="label-item"><span style={{color: 'crimson', marginRight: '1px'}}>*</span>Kategoriyasi</label>
           <select name="category_id" className="select-item" id="category_id" value={category_id} onChange={inputValue}>
-            <option value="1">Name</option>
-            <option value="2">Name</option>
+            <option value="1000">Kategoriya1</option>
+            <option value="2000">Kategoriya2</option>
           </select>
         </div>
 

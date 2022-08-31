@@ -7,6 +7,7 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
+import File from "./layouts/files/File";
 
 const routes = [
   {
@@ -35,6 +36,15 @@ const routes = [
     route: "/billing",
     component: <Billing />,
     role: "ADMIN",
+  },
+  {
+    type: "collapse",
+    name: "Fayllar",
+    key: "files",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/files",
+    component: <File />,
+    role: "USER",
   },
   {
     type: "collapse",

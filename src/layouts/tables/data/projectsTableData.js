@@ -13,6 +13,7 @@ export default function data() {
       .get(`${url}/product/all`)
       .then((res) => {
         setJson(res.data.object);
+        window.localStorage.setItem("product", "");
       })
       .catch((err) => {
         console.log(err);
@@ -22,6 +23,10 @@ export default function data() {
   useEffect(() => {
       productData();
   }, []);
+
+    useEffect(() => {
+        productData();
+    }, [localStorage.getItem('product') === 'save']);
 
     function delete_product(id) {
         axios

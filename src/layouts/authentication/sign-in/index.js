@@ -157,17 +157,12 @@ function Basic() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
+            Tizimga kirish
           </MDTypography>
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
                 <FacebookIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
               </MDTypography>
             </Grid>
             <Grid item xs={2}>
@@ -181,7 +176,7 @@ function Basic() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <MDInput
-                type="username"
+                type="text"
                 id="login"
                 value={username}
                 onChange={inputValue}
@@ -190,7 +185,6 @@ function Basic() {
                 fullWidth
               />
               <div className="error-message">
-                {/* eslint-disable-next-line camelcase */}
                 {u_error ? "Login kamida 5 ta belgidan ko'p bo'lishi kerak!" : ""}
               </div>
               <div className="error-message">{error ? "Bu foydalanuvchi mavjud emas!" : ""}</div>
@@ -206,10 +200,8 @@ function Basic() {
                 fullWidth
               />
               <div className="error-message">
-                {/* eslint-disable-next-line camelcase */}
                 {p_error ? "Parol kamida 4 ta belgidan ko'p bo'lishi kerak!" : ""}
               </div>
-              {/* eslint-disable-next-line camelcase */}
               <div className="error-message">{pas_error ? "Parol noto'g'ri kiritildi" : ""}</div>
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
@@ -250,9 +242,7 @@ function Basic() {
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar open={open} autoHideDuration={7000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="info" sx={{ width: "100%" }}>
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            Muvaffaqiyatli ro'yxatdan o'tdingiz! Login parolingizni kiritib tizimga kirishingiz
-            mumkin.
+            Muvaffaqiyatli ro'yxatdan o'tdingiz!
           </Alert>
         </Snackbar>
       </Stack>
