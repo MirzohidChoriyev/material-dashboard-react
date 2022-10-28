@@ -8,9 +8,21 @@ import DataTable from "../../examples/Tables/DataTable";
 import filesTableData from './filesTableData'
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import {Button, Modal} from "antd";
+import {url} from "../../utils/HttpUrl";
 
 function File() {
     const { columns: pColumns, rows: pRows } = filesTableData();
+    const [show, setShow] = useState(false);
+
+    const userImageSee = () =>{
+        setShow(localStorage.getItem("userHashId") !== "");
+    };
+
+    useEffect(()=>{
+        userImageSee();
+    }, [localStorage.getItem("userHashId") !== null]);
+
     return(
         <div>
             <DashboardLayout>
@@ -47,6 +59,16 @@ function File() {
                     </Grid>
                 </MDBox>
             </DashboardLayout>
+
+            <Modal title="User information" visible={show} footer = {false}>
+                <div>
+                    <img src={`${url}/userImage/readImage/${localStorage.getItem("userHashId")}`}
+                         style={{ width: '50%', height: '300px', borderRadius: '6px' }} />
+                </div>
+                <div style={{marginTop: '10px'}}>
+                    <Button type="primary" onClick={() => setShow(false)}>Close</Button>
+                </div>
+            </Modal>
         </div>
     );
 } export default File;

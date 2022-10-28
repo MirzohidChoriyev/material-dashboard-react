@@ -30,15 +30,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
-    role: "ADMIN",
-  },
-  {
-    type: "collapse",
     name: "Fayllar",
     key: "files",
     icon: <Icon fontSize="small">receipt_long</Icon>,

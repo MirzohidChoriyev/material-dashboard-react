@@ -11,6 +11,10 @@ export default function data() {
     const [json, setJson] = useState([]);
     const [users, setUsers] = useState([]);
 
+    const userHashIdSet = (hashId) =>{
+        localStorage.setItem("userHashId", hashId == null ? null : hashId);
+    }
+
     const getAll = () => {
         axios
             .get(`${url}/userImage/allimage`)
@@ -61,7 +65,7 @@ export default function data() {
             json.map((item, index) => ({
                 user_name: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <img src={`${url}/userImage/readImage/${item.hashId}`} id = "user_image" /> {item.name}
+                        <img onClick={() => userHashIdSet(item.hashId)} src={`${url}/userImage/readImage/${item.hashId}`} id = "user_image" /> {item.name}
                     </MDTypography>
                 ),
                 image_name: (
@@ -110,7 +114,7 @@ export default function data() {
                             delete
                         </MDButton>
                     </MDTypography>
-                ),
-            })),
+                )
+            }))
     };
 }
